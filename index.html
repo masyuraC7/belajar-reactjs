@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const container = document.getElementById("root");
+      const root = ReactDOM.createRoot(container);
+
+      function Welcome() {
+        return <h1>Hello, React!</h1>;
+      }
+
+      function Goodbye({ name }) {
+        return <h1>Goodbye {name ? name : "Heyy"}, React!</h1>;
+      }
+
+      function DaftarSiswa() {
+        const daftarSiswa = ["John", "Jane", "Joe"];
+        return (
+          <ul>
+            {daftarSiswa.map((siswa) => (
+              <li key={siswa}>{siswa}</li>
+            ))}
+          </ul>
+        );
+      }
+
+      function Likes() {
+        const [liked, setLiked] = React.useState(0);
+
+        function handleClick() {
+          setLiked(liked + 1);
+        }
+
+        return (
+          <>
+            <button onClick={handleClick}>Like ({liked})</button>
+            <br></br>
+          </>
+        );
+      }
+
+      function Counter() {
+        const [count, setCount] = React.useState(0);
+
+        function handleClickMinus() {
+          setCount(count - 1);
+        }
+
+        function handleClickPlus() {
+          setCount(count + 1);
+        }
+
+        function handleClickReset() {
+          setCount(0);
+        }
+
+        return (
+          <>
+            <button onClick={handleClickMinus}>-</button>
+            <span>{count}</span>
+            <button onClick={handleClickPlus}>+</button>
+            <button onClick={handleClickReset}>Reset</button>
+            <br></br>
+          </>
+        );
+      }
+
+      function CounterPlus() {
+        const [count, setCount] = React.useState(0);
+        const [status, setStatus] = React.useState(true);
+
+        function handleClickMinus() {
+          setCount(count - 1);
+        }
+
+        function handleClickPlus() {
+          setCount(count + 1);
+        }
+
+        function handleClickReset() {
+          setCount(0);
+          setStatus(true);
+        }
+
+        return (
+          <>
+            <button
+              disabled={count < 0 || count > 9}
+              onClick={handleClickMinus}
+            >
+              -
+            </button>
+            <span>{count < 0 || count > 9 ? "Done!" : count}</span>
+            <button disabled={count < 0 || count > 9} onClick={handleClickPlus}>
+              +
+            </button>
+            <button
+              disabled={count < 0 || count > 9 ? false : true}
+              onClick={handleClickReset}
+            >
+              Reset
+            </button>
+            <br></br>
+          </>
+        );
+      }
+
+      function App() {
+        return (
+          <div>
+            <Welcome />
+            <Welcome />
+            <Goodbye name="Sara" />
+            <Goodbye />
+            <DaftarSiswa />
+            <Likes />
+            <Counter />
+            <CounterPlus />
+          </div>
+        );
+      }
+
+      root.render(<App />);
+    </script>
+  </body>
+</html>
