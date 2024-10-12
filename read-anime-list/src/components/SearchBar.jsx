@@ -1,5 +1,9 @@
 /* eslint-disable react/prop-types */
-export default function SearchBar({ query, setQuery, onSearchAnime, animes }) {
+import { useState } from "react";
+
+export default function SearchBar({ animes, onSearchAnime }) {
+  const [query, setQuery] = useState("");
+
   function handleChange(e) {
     setQuery(e.target.value);
     onSearchAnime(e.target.value);

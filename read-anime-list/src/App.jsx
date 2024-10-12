@@ -1,8 +1,10 @@
 import { useState } from "react";
-import NavBar from "./components/NavBar";
 import "./App.css";
+import NavBar from "./components/NavBar";
 import AnimeList from "./components/AnimeList";
 import AnimeDetail from "./components/AnimeDetail";
+import SearchBar from "./components/SearchBar";
+import Box from "./components/box";
 
 const animesData = [
   {
@@ -44,11 +46,8 @@ const animesData = [
 ];
 
 function App() {
-  const [query, setQuery] = useState("");
   const [animes, setAnimes] = useState(animesData);
   const [selectedAnime, setSelectedAnime] = useState([]);
-  const [isOpen1, setIsOpen1] = useState(true);
-  const [isOpen2, setIsOpen2] = useState(true);
 
   function handleSelectedAnime(id) {
     const newAnime = animes.filter((anime) => anime.mal_id === id);
@@ -57,8 +56,8 @@ function App() {
 
   function handleSearchAnime(newQuery) {
     let selectedAnimeStatus = true;
-    const newAnimes = animesData.filter((anime) =>
-      anime.title.toLowerCase().search(newQuery.toLowerCase()) !== -1
+    const newAnimes = animes.filter(
+      (anime) => anime.title.toLowerCase().search(newQuery.toLowerCase()) !== -1
     );
 
     newAnimes.map((anime) => {
@@ -80,24 +79,16 @@ function App() {
 
   return (
     <div className="app-container">
-      <NavBar
-        query={query}
-        setQuery={setQuery}
-        onSearchAnime={handleSearchAnime}
-        animes={animes}
-      />
+      <NavBar>
+        <SearchBar animes={animes} onSearchAnime={handleSearchAnime} />
+      </NavBar>
       <main className="main">
-        <AnimeList
-          animes={animes}
-          handleSelectedAnime={handleSelectedAnime}
-          isOpen1={isOpen1}
-          setIsOpen1={setIsOpen1}
-        />
-        <AnimeDetail
-          selectedAnime={selectedAnime}
-          isOpen2={isOpen2}
-          setIsOpen2={setIsOpen2}
-        />
+        <Box title="Anime List">
+          <AnimeList animes={animes} onSelectedAnime={handleSelectedAnime} />
+        </Box>
+        <Box title="Anime Details">
+          <AnimeDetail selectedAnime={selectedAnime} />
+        </Box>
       </main>
     </div>
   );
